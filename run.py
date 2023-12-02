@@ -218,14 +218,6 @@ def add_balance():
     else:
         abort(401)  # Unauthorized
 
-@app.route('/checkout_balance', methods=['POST'])
-def checkout_balance():
-    if 'username' in session:
-        user_info = user_data[session['username']]
-        return render_template('checkout_balance.html', user_info=user_info)
-    else:
-        abort(401)  # Unauthorized
-
 @app.route('/withdraw_balance', methods=['POST'])
 def withdraw_balance():
     if 'username' in session:
