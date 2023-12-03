@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify, abort
+from flask import Flask, request, redirect, url_for, session, jsonify, abort
 from apscheduler.schedulers.background import BackgroundScheduler
 import random
 
@@ -120,12 +120,12 @@ def index():
     user_info = user_data.get(username, None)
 
         if user_info:
-            return render_template('index.html', available_tickets=available_tickets, user_info=user_info, pending_transactions=list(pending_transactions))
+            return jsonify(available_tickets=available_tickets, user_info=user_info, pending_transactions=list(pending_transactions))
         else:
             abort(404, description="User not found in user_data")
 else:
     user_info = None  # Set user_info to None if the user is not logged in
-    return render_template('index.html', available_tickets=available_tickets, user_info=user_info, pending_transactions=list(pending_transactions))
+    return jsonify(available_tickets=available_tickets, user_info=user_info, pending_transactions=list(pending_transactions))
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -138,7 +138,7 @@ def login():
             return redirect(url_for('index'))
         else:
             abort(401)  # Unauthorized
-    return render_template('login.html')
+    return jsonify('login.html')
 
 @app.route('/logout')
 def logout():
