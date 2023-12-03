@@ -119,10 +119,10 @@ def index():
     username = session['username']
     user_info = user_data.get(username, None)
 
-    if user_info:
-        return render_template('index.html', available_tickets=available_tickets, user_info=user_info, pending_transactions=list(pending_transactions))
-    else:
-        abort(404, description="User not found in user_data")
+        if user_info:
+            return render_template('index.html', available_tickets=available_tickets, user_info=user_info, pending_transactions=list(pending_transactions))
+        else:
+            abort(404, description="User not found in user_data")
 else:
     user_info = None  # Set user_info to None if the user is not logged in
     return render_template('index.html', available_tickets=available_tickets, user_info=user_info, pending_transactions=list(pending_transactions))
