@@ -90,9 +90,10 @@ def execute_transactions(all_pending_transactions):
     for transaction in all_pending_transactions:
         ticket_id, user_id, action, quantity = transaction
         user_info = user_data[user_id]
+        total_cost = quantity * available_tickets[ticket_id]['price']
         
         if action == 'book':
-            if quantity <= available_tickets[ticket_id]['quantity'] and quantity <= user_info['balance']:
+            if quantity <= available_tickets[ticket_id]['quantity'] and total_cost <= user_info['balance']:
                 # Execute the booking transaction
                 booked_tickets.setdefault(ticket_id, {'quantity': 0})
                 booked_tickets[ticket_id]['quantity'] += quantity
