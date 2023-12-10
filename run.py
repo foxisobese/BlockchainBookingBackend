@@ -46,7 +46,7 @@ user_data = {
         'password': 'password0',
         'kyc': 'kyc_info0',
         'owned_tickets': {},
-        'balance': 10000
+        'balance': 10000,
         'address': 0x00000000000000000000
     },
     'user1': {
@@ -54,7 +54,7 @@ user_data = {
         'password': 'password1',
         'kyc': 'kyc_info1',
         'owned_tickets': {},
-        'balance': 100
+        'balance': 100,
         'address': 0x00000000000000000001
     },
     'user2': {
@@ -62,7 +62,7 @@ user_data = {
         'password': 'password2',
         'kyc': 'kyc_info2',
         'owned_tickets': {},
-        'balance': 150
+        'balance': 150,
         'address': 0x00000000000000000002
     },
     # Add more users if required
@@ -144,8 +144,8 @@ def execute_transactions(all_pending_transactions):
 @app.route('/')
 def index():
     if 'username' in session:
-    username = session['username']
-    user_info = user_data.get(username, None)
+        username = session['username']
+        user_info = user_data.get(username, None)
 
         if user_info:
             return jsonify(available_tickets=available_tickets, user_info=user_info, pending_transactions=list(pending_transactions))
