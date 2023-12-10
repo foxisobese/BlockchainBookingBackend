@@ -41,6 +41,14 @@ available_tickets = {
 # Data structure to store booked tickets, user balances, and pending transactions (hard coded)
 booked_tickets = {}
 user_data = {
+    'admin': {
+        'id': 'admin',
+        'password': 'password0',
+        'kyc': 'kyc_info0',
+        'owned_tickets': {},
+        'balance': 10000
+        'address': 0
+    },
     'user1': {
         'id': 'user1',
         'password': 'password1',
@@ -93,6 +101,9 @@ def execute_transactions(all_pending_transactions):
         ticket_id, user_id, action, quantity = transaction
         user_info = user_data[user_id]
         total_cost = quantity * available_tickets[ticket_id]['price']
+
+        # Use the admin user's address as the destination
+        destination_address = user_data['admin']['address']
         
         if action == 'book':
             if quantity <= available_tickets[ticket_id]['quantity'] and total_cost <= user_info['balance']:
@@ -103,6 +114,13 @@ def execute_transactions(all_pending_transactions):
                 user_info['owned_tickets'].setdefault(ticket_id, 0)
                 user_info['owned_tickets'][ticket_id] += quantity
                 user_info['balance'] -= quantity * available_tickets[ticket_id]['price']
+                
+                transfer_tokens_data = {
+                        'from': user_info['address'],
+                        'to': destination_address,
+                        'tokenid': ticket_id
+                    }
+                transfer_tokens_response = requests.post('http://blockchain-app-host:port/transfer_tokens', json=transfer_tokens_data)
         elif action == 'cancel':
             if quantity <= user_info['owned_tickets'].get(ticket_id, 0):
                 # Execute the cancellation transaction
@@ -110,6 +128,13 @@ def execute_transactions(all_pending_transactions):
                 available_tickets[ticket_id]['quantity'] += quantity
                 user_info['owned_tickets'][ticket_id] -= quantity
                 user_info['balance'] += quantity * available_tickets[ticket_id]['price']
+
+                transfer_tokens_data = {
+                        'from': destination_address,
+                        'to': user_info['address'],
+                        'tokenid': ticket_id
+                    }
+                transfer_tokens_response = requests.post('http://blockchain-app-host:port/transfer_tokens', json=transfer_tokens_data)
 
     # Clear the pending transactions after execution
     pending_transactions.clear()
