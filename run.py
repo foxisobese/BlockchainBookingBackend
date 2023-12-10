@@ -47,6 +47,7 @@ user_data = {
         'kyc': 'kyc_info1',
         'owned_tickets': {},
         'balance': 100
+        'address': 1
     },
     'user2': {
         'id': 'user2',
@@ -54,6 +55,7 @@ user_data = {
         'kyc': 'kyc_info2',
         'owned_tickets': {},
         'balance': 150
+        'address': 2
     },
     # Add more users if required
 }
