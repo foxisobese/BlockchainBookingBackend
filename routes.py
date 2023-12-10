@@ -1,8 +1,7 @@
 from flask import jsonify, request
 from flask import render_template
-from app import app, db
-from app.models import User
-from app.ethereum import transfer_tokens, transfer_tickets, connect_to_ethereum
+from models import User
+from ethereum import transfer_tokens, transfer_tickets, connect_to_ethereum
 
 
 node_endpoint = "https://rpc.ankr.com/eth_sepolia"
