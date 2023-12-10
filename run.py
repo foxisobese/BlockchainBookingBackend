@@ -151,9 +151,9 @@ def index():
             return jsonify(available_tickets=available_tickets, user_info=user_info, pending_transactions=list(pending_transactions))
         else:
             abort(404, description="User not found in user_data")
-else:
-    user_info = None  # Set user_info to None if the user is not logged in
-    return jsonify(available_tickets=available_tickets, user_info=user_info, pending_transactions=list(pending_transactions))
+    else:
+        user_info = None  # Set user_info to None if the user is not logged in
+        return jsonify(available_tickets=available_tickets, user_info=user_info, pending_transactions=list(pending_transactions))
 
 
 @app.route('/login', methods=['GET', 'POST'])
