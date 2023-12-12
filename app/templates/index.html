@@ -1,0 +1,152 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digicket Token App</title>
+</head>
+<body>
+    <h1>Digicket Token App</h1>
+
+    <!-- Set Address Form -->
+    <h2>Set Your Ethereum Address</h2>
+    <form id="setAddressForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="address">Ethereum Address:</label>
+        <input type="text" id="address" name="address" required>
+        <br>
+        <button type="button" onclick="setAddress()">Set Address</button>
+    </form>
+
+    <hr>
+
+    <!-- Transfer Tokens Form -->
+    <h2>Transfer Tokens</h2>
+    <form id="transferTokensForm">
+        <label for="transferFrom">Username(From):</label>
+        <input type="text" id="transferFrom" name="transferFrom" required>
+        <br>
+        <label for="transferTo">Username(To):</label>
+        <input type="text" id="transferTo" name="transferTo" required>
+        <br>
+        <label for="transferTokenId">Token ID:</label>
+        <input type="text" id="transferTokenId" name="transferTokenId" required>
+        <br>
+        <button type="button" onclick="transferTokens()">Transfer Tokens</button>
+    </form>
+
+    <hr>
+
+    <!-- Transfer Ticketss Form -->
+    <h2>Transfer Ticket</h2>
+    <form id="transferTicketsForm">
+        <label for="transferUsername">Username:</label>
+        <input type="text" id="transferUsername" name="transferUsername" required>
+        <br>
+        <label for="transferTokenId">Token ID:</label>
+        <input type="text" id="transferTokenId" name="transferTokenId" required>
+        <br>
+        <label for="transferAmount">USDC Amount:</label>
+        <input type="text" id="transferAmount" name="transferAmount" required>
+        <br>
+        <button type="button" onclick="transferTickets()">Transfer Tickets</button>
+    </form>
+
+    <hr>
+    
+    <!-- Minting Ticketss Form -->
+    <h2>Minting Ticket</h2>
+    <form id="mintingTicketForm">
+        <label for="eventName">Event Name:</label>
+        <input type="text" id="eventName" name="eventName" required>
+        <br>
+        <label for="eventDate">Event Date:</label>
+        <input type="text" id="eventDate" name="eventDate" required>
+        <br>
+        <label for="seatNumber">Seat Number:</label>
+        <input type="text" id="seatNumber" name="seatNumber" required>
+        <br>
+        <label for="price">Price:</label>
+        <input type="text" id="price" name="price" required>
+        <br>
+        <label for="newTokenUrl">Token URL:</label>
+        <input type="text" id="newTokenUrl" name="newTokenUrl" required>
+        <br>
+        <button type="button" onclick="mintTickets()">Mint Tickets</button>
+    </form>
+
+    <script>
+        async function setAddress() {
+            const username = document.getElementById('username').value;
+            const address = document.getElementById('address').value;
+
+            const response = await fetch('/set_address', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, address }),
+            });
+
+            const data = await response.json();
+            alert(data.message);
+        }
+
+        async function transferTokens() {
+            const transferFrom = document.getElementById('transferFrom').value;
+            const transferTo = document.getElementById('transferTo').value;
+            const transferTokenId = document.getElementById('transferTokenId').value;
+
+            const response = await fetch('/transfer_tokens', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ from: transferFrom , to: transferTo, tokenid: transferTokenId}),
+            });
+
+            const data = await response.json();
+            alert(data.message);
+        }
+
+        async function transferTickets() {
+            const transferUsername = document.getElementById('transferUsername').value;
+            const transferTokenId = document.getElementById('transferTokenId').value;
+            const transferAmount = document.getElementById('transferAmount').value;
+
+            const response = await fetch('/transfer_tickets', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username: transferUsername , tokenid: transferTokenId, amount: transferAmount}),
+            });
+
+            const data = await response.json();
+            alert(data.message);
+        }
+
+        async function mintTickets() {
+            const eventName = document.getElementById('eventName').value;
+            const eventDate = document.getElementById('eventDate').value;
+            const seatNumber = document.getElementById('seatNumber').value;
+            const price = document.getElementById('price').value;
+            const newTokenUrl = document.getElementById('newTokenUrl').value;
+
+            const response = await fetch('/mint_tickets', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ event_name: eventName , event_date: eventDate, seat_number: seatNumber, price: price, new_token_url: newTokenUrl}),
+            });
+
+            const data = await response.json();
+            alert(data.message);
+        }
+    </script>
+</body>
+</html>

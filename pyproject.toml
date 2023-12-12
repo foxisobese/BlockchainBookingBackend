@@ -1,0 +1,30 @@
+[project]
+name = "blockchainbookingbackend"
+version = "0.1.0"
+description = "Add your description here"
+authors = [
+    { name = "Nam Junghyun", email = "13118114+cr0sh@users.noreply.github.com" }
+]
+dependencies = [
+    "flask>=3.0.0",
+    "apscheduler>=3.10.4",
+    "flask_cors>=4.0.0",
+    "requests>=2.31.0",
+    "flask-sqlalchemy>=3.1.1",
+    "web3>=6.11.4",
+    "multidict>=6.0.4",
+    "setuptools>=69.0.2",
+]
+readme = "README.md"
+requires-python = ">= 3.9"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = []
+
+[tool.hatch.metadata]
+allow-direct-references = true
